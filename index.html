@@ -1,0 +1,1634 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>캠빌 서비스 접수 신청서</title>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <style>
+      :root {
+        --bg: #f4f6f8;
+        --ink: #202124;
+        --green: #03c75a;
+        --green-dark: #00a84f;
+        --line: #e5e8eb;
+        --muted: #6f7782;
+        --field: #f9fafb;
+        --danger: #d93025;
+        --soft-green: #effcf5;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-width: 320px;
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Arial, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+
+      button,
+      a.button-link {
+        min-height: 48px;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(10px);
+      }
+
+      .header-inner,
+      .shell {
+        width: min(100%, 1180px);
+        margin: 0 auto;
+      }
+
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 14px 18px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-mark {
+        display: inline-flex;
+        width: 38px;
+        height: 38px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        background: var(--green);
+        color: #fff;
+        font-size: 22px;
+        font-weight: 900;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        margin-top: 2px;
+        font-size: 21px;
+        letter-spacing: 0;
+      }
+
+      .eyebrow {
+        color: var(--green);
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      .pill {
+        border: 1px solid #dce1e6;
+        border-radius: 999px;
+        background: #f9fafb;
+        color: #59636e;
+        font-size: 14px;
+        font-weight: 800;
+        padding: 8px 14px;
+        white-space: nowrap;
+      }
+
+      .shell {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        gap: 22px;
+        padding: 22px 18px;
+      }
+
+      .card,
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 10px 28px rgba(35, 44, 55, 0.04);
+      }
+
+      .card {
+        display: none;
+        padding: 26px;
+      }
+
+      .card.active {
+        display: block;
+      }
+
+      .page-title {
+        margin: -26px -26px 24px;
+        border-bottom: 1px solid #eef1f4;
+        padding: 20px 26px 22px;
+      }
+
+      .page-title h2 {
+        margin-top: 10px;
+        font-size: 26px;
+        font-weight: 900;
+        letter-spacing: 0;
+      }
+
+      .page-title p:last-child {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.7;
+      }
+
+      .question-title {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 22px 0 12px;
+        font-size: 19px;
+        font-weight: 900;
+        letter-spacing: 0;
+      }
+
+      .question-title:first-child {
+        margin-top: 0;
+      }
+
+      .question-title span {
+        color: var(--green);
+      }
+
+      .notice,
+      .guide-box {
+        display: grid;
+        gap: 8px;
+        color: #626a73;
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
+      .notice h3 {
+        margin-top: 14px;
+        color: #59616b;
+        font-size: 15px;
+      }
+
+      .notice ul,
+      .guide-box ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .privacy-table {
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr);
+        margin: 18px 0;
+        border-top: 1px solid #e8ecef;
+      }
+
+      .privacy-table span,
+      .privacy-table strong {
+        min-height: 42px;
+        border-bottom: 1px solid #e8ecef;
+        padding: 12px 10px;
+      }
+
+      .privacy-table span {
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .privacy-table strong {
+        font-size: 14px;
+      }
+
+      .field,
+      fieldset {
+        display: grid;
+        gap: 10px;
+        margin: 18px 0 0;
+      }
+
+      fieldset {
+        min-width: 0;
+        border: 0;
+        padding: 0;
+      }
+
+      .field > span,
+      legend {
+        color: #202124;
+        font-size: 17px;
+        font-weight: 900;
+      }
+
+      .field small,
+      .help-text {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        min-height: 48px;
+        border: 1px solid #dce1e6;
+        border-radius: 8px;
+        background: var(--field);
+        color: var(--ink);
+        outline: none;
+        padding: 12px 14px;
+      }
+
+      textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--green);
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(3, 199, 90, 0.16);
+      }
+
+      input[aria-invalid="true"],
+      select[aria-invalid="true"],
+      textarea[aria-invalid="true"] {
+        border-color: var(--danger);
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .address-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 140px;
+        gap: 10px;
+      }
+
+      .radio-list {
+        display: grid;
+        gap: 9px;
+      }
+
+      .radio-list label,
+      .check {
+        min-height: 48px;
+        cursor: pointer;
+      }
+
+      .radio-list label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid #e5e8eb;
+        border-radius: 8px;
+        padding: 10px 12px;
+      }
+
+      .radio-list input,
+      .check input {
+        width: 20px;
+        height: 20px;
+        flex: 0 0 auto;
+        accent-color: var(--green);
+      }
+
+      .radio-list label:has(input:checked) {
+        border-color: var(--green);
+        background: var(--soft-green);
+      }
+
+      .radio-list span,
+      .check span {
+        color: #30343a;
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      .check {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 18px;
+        border-top: 1px solid #eef1f4;
+        padding-top: 18px;
+      }
+
+      .guide-box {
+        margin-top: 14px;
+        border: 1px solid #f0dfaa;
+        border-radius: 10px;
+        background: #fffaf0;
+        color: #6b5d3a;
+        padding: 14px;
+      }
+
+      .canopy-guide-image-wrap {
+        position: relative;
+        width: 100%;
+        margin: 16px 0;
+        border: 1px solid #e4e7ea;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #f5f5f5;
+      }
+
+      .canopy-guide-image {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .canopy-guide-image-wrap.is-placeholder {
+        min-height: 180px;
+      }
+
+      .canopy-guide-image-wrap.is-placeholder .canopy-guide-image {
+        display: none;
+      }
+
+      .canopy-guide-placeholder {
+        display: none;
+        padding: 46px 18px;
+        color: #808892;
+        font-size: 15px;
+        font-weight: 800;
+        text-align: center;
+      }
+
+      .canopy-guide-image-wrap.is-placeholder .canopy-guide-placeholder {
+        display: block;
+      }
+
+      .link-button-grid {
+        display: grid;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .button-link,
+      .primary-button,
+      .secondary-button,
+      .ghost-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 900;
+        padding: 12px 16px;
+        text-decoration: none;
+      }
+
+      .primary-button,
+      .button-link {
+        border: 0;
+        background: var(--green);
+        color: #fff;
+      }
+
+      .primary-button:hover,
+      .button-link:hover {
+        background: var(--green-dark);
+      }
+
+      .secondary-button {
+        border: 1px solid #cfd6dc;
+        background: #fff;
+        color: #30343a;
+      }
+
+      .ghost-button {
+        border: 0;
+        background: transparent;
+        color: #59636e;
+      }
+
+      .step-actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 26px;
+        border-top: 1px solid #eef1f4;
+        padding-top: 18px;
+      }
+
+      .step-actions .primary-button,
+      .step-actions .secondary-button {
+        min-width: 130px;
+      }
+
+      .photo-preview {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .photo-preview figure {
+        margin: 0;
+        overflow: hidden;
+        border: 1px solid #e2e6ea;
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .photo-preview img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+      }
+
+      .photo-preview figcaption {
+        overflow: hidden;
+        padding: 7px;
+        color: #59636e;
+        font-size: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .error-text {
+        display: none;
+        margin-top: 10px;
+        color: var(--danger);
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 1.5;
+      }
+
+      .error-text.show {
+        display: block;
+      }
+
+      .side {
+        position: sticky;
+        top: 82px;
+        align-self: start;
+        display: grid;
+        gap: 14px;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+
+      .panel h2 {
+        margin-top: 8px;
+        font-size: 21px;
+        font-weight: 900;
+      }
+
+      .panel-help,
+      .warn {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .warn {
+        border-radius: 8px;
+        background: #fff4e6;
+        color: #8a5a15;
+        padding: 10px 12px;
+      }
+
+      .receipt {
+        display: grid;
+        gap: 5px;
+        margin-top: 16px;
+        border: 1px solid #d5f3e2;
+        border-radius: 8px;
+        background: #f1fbf6;
+        padding: 14px;
+      }
+
+      .receipt span,
+      .receipt small {
+        color: #64706a;
+        font-size: 13px;
+      }
+
+      .receipt strong {
+        color: #0c7d3e;
+        font-size: 20px;
+        overflow-wrap: anywhere;
+      }
+
+      .outline {
+        display: grid;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .outline button {
+        border: 1px solid #eef1f4;
+        border-radius: 8px;
+        background: #fff;
+        color: #59636e;
+        font-size: 13px;
+        font-weight: 800;
+        line-height: 1.35;
+        padding: 10px 12px;
+        text-align: left;
+      }
+
+      .outline button.active {
+        border-color: var(--green);
+        background: var(--soft-green);
+        color: #0f7d3f;
+      }
+
+      .completion-card {
+        border: 1px solid #d5f3e2;
+        border-radius: 12px;
+        background: #f1fbf6;
+        padding: 18px;
+      }
+
+      .completion-card strong {
+        display: block;
+        margin-top: 8px;
+        color: #0c7d3e;
+        font-size: 26px;
+        overflow-wrap: anywhere;
+      }
+
+      .postcode-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(32, 33, 36, 0.48);
+        padding: 16px;
+      }
+
+      .postcode-modal.open {
+        display: flex;
+      }
+
+      .postcode-panel {
+        width: min(100%, 560px);
+        height: min(82vh, 620px);
+        overflow: hidden;
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 20px 70px rgba(0, 0, 0, 0.24);
+      }
+
+      .postcode-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 52px;
+        border-bottom: 1px solid #e5e8eb;
+        padding: 0 14px;
+      }
+
+      .postcode-header strong {
+        font-size: 16px;
+      }
+
+      .postcode-header button {
+        width: 38px;
+        min-height: 38px;
+        border: 0;
+        border-radius: 999px;
+        background: #f1f3f5;
+        font-size: 20px;
+      }
+
+      #postcodeLayer {
+        width: 100%;
+        height: calc(100% - 52px);
+      }
+
+      @media (max-width: 1024px) {
+        .shell {
+          grid-template-columns: 1fr;
+        }
+
+        .side {
+          position: static;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .pill {
+          display: none;
+        }
+
+        .shell {
+          padding: 14px;
+        }
+
+        .card,
+        .panel {
+          border-radius: 10px;
+        }
+
+        .card {
+          padding: 20px;
+        }
+
+        .page-title {
+          margin: -20px -20px 20px;
+          padding: 18px 20px;
+        }
+
+        .page-title h2 {
+          font-size: 22px;
+        }
+
+        .question-title,
+        .field > span,
+        legend {
+          font-size: 17px;
+        }
+
+        .privacy-table,
+        .grid-2,
+        .address-row {
+          grid-template-columns: 1fr;
+        }
+
+        .privacy-table span {
+          border-bottom: 0;
+          padding-bottom: 0;
+        }
+
+        .step-actions {
+          flex-direction: column-reverse;
+        }
+
+        .step-actions button,
+        .step-actions a,
+        .primary-button,
+        .secondary-button,
+        .button-link {
+          width: 100%;
+        }
+
+        .postcode-modal {
+          align-items: flex-end;
+          padding: 0;
+        }
+
+        .postcode-panel {
+          width: 100%;
+          height: 88vh;
+          border-radius: 16px 16px 0 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <div class="brand">
+          <span class="brand-mark">C</span>
+          <div>
+            <p class="eyebrow">CAMVIL FORM</p>
+            <h1>캠빌 서비스 접수 신청서</h1>
+          </div>
+        </div>
+        <span class="pill">Google Sheets 연동 준비</span>
+      </div>
+    </header>
+
+    <main class="shell">
+      <form id="serviceForm" novalidate>
+        <section class="card active" data-step="intro">
+          <div class="page-title">
+            <p class="eyebrow">1페이지</p>
+            <h2>캠빌 서비스 접수 신청서</h2>
+            <p>캠빌 AS / 교환 / 반품 접수 페이지입니다. 아래 내용을 확인 후 접수를 진행해주세요.</p>
+          </div>
+
+          <h3 class="question-title"><span>* 1.</span> 접수 전 꼭 확인해주세요.</h3>
+          <div class="notice">
+            <p>캠빌 AS / 교환 / 반품 접수 페이지입니다.</p>
+            <p>보다 빠른 처리를 위해 아래 내용을 확인 후 접수를 진행해주세요.</p>
+            <h3>1. 처리 기간 안내</h3>
+            <ul>
+              <li>접수 후 영업일 기준 1~3일 내 회수 접수가 진행됩니다.</li>
+              <li>제품 입고 후 평균 10~14영업일 정도 소요됩니다.</li>
+              <li>수리 내용 및 부품 수급 상황에 따라 처리 기간이 추가될 수 있습니다.</li>
+            </ul>
+            <h3>2. 비용 안내</h3>
+            <ul>
+              <li>고객 과실 또는 보증기간 경과 시 비용이 발생할 수 있습니다.</li>
+              <li>유상 수리의 경우 별도 안내 후 진행됩니다.</li>
+              <li>교환 및 반품의 경우 사유에 따라 배송비가 발생할 수 있습니다.</li>
+            </ul>
+            <h3>3. 발송 전 확인사항</h3>
+            <ul>
+              <li>제품에 묻은 흙, 모래, 물기 등을 제거 후 발송해주세요.</li>
+              <li>반드시 박스 포장 후 발송해주세요.</li>
+              <li>AS 품목 외 물품은 동봉하지 말아주세요.</li>
+              <li>동봉된 물품의 분실 및 파손에 대해서는 책임지지 않습니다.</li>
+            </ul>
+            <h3>4. 텐트 · 쉘터 · 타프 접수 안내</h3>
+            <p>스킨(원단) 관련 AS: 지퍼 / 방충망 / TPU / 원단 찢어짐 / 웨빙 / 스커트</p>
+            <p>→ 폴대는 제외하고 스킨만 발송해주세요.</p>
+            <p>폴대 관련 AS: 폴대 휘어짐 / 폴대 파손 / 쇼크코드(고무줄) / 연결부 파손</p>
+            <p>→ 스킨은 제외하고 폴대만 발송해주세요.</p>
+            <h3>5. 사갓 캐노피 고객 안내</h3>
+            <p>사갓 캐노피 프레임 파손의 경우 자가수리 / 신규 프레임 구매 / 리퍼 프레임 구매가 AS 접수보다 빠를 수 있습니다.</p>
+            <h3>6. 개인정보 이용 안내</h3>
+            <p>원활한 AS 진행을 위해 고객정보가 AS 협력업체 및 택배사에 제공될 수 있으며, 접수 진행 시 이에 동의한 것으로 간주됩니다.</p>
+          </div>
+          <label class="check">
+            <input name="precheckAgree" required type="checkbox" value="동의" />
+            <span>위 내용을 충분히 숙지하였으며 동의합니다.</span>
+          </label>
+          <p class="error-text" data-error></p>
+          <div class="step-actions">
+            <span></span>
+            <button class="primary-button" data-next type="button">다음</button>
+          </div>
+        </section>
+
+        <section class="card" data-step="privacy">
+          <div class="page-title">
+            <p class="eyebrow">2페이지</p>
+            <h2>개인정보 입력 및 수집 동의</h2>
+          </div>
+          <h3 class="question-title"><span>* 2.</span> 개인정보 수집 및 이용 동의</h3>
+          <p class="help-text">동의하지 않을 경우, 설문 참여가 제한될 수 있습니다.</p>
+          <div class="privacy-table">
+            <span>수집 및 이용하는 개인정보 항목</span><strong>이름, 연락처, 주소</strong>
+            <span>수집 및 이용 목적</span><strong>제품 회수 / 배송 / AS · 교환 · 반품 서비스 제공</strong>
+            <span>보유 및 이용기간</span><strong>이용 목적 달성 후 파기</strong>
+          </div>
+          <label class="check">
+            <input name="privacyAgree" required type="checkbox" value="동의" />
+            <span>동의합니다</span>
+          </label>
+          <div class="grid-2">
+            <label class="field">
+              <span>3. 이름</span>
+              <input name="customerName" required placeholder="이름을 입력해주세요." />
+            </label>
+            <label class="field">
+              <span>4. 연락처</span>
+              <input name="phone" required inputmode="tel" placeholder="010-0000-0000" />
+            </label>
+          </div>
+          <label class="field">
+            <span>5. 기본주소</span>
+            <div class="address-row">
+              <input name="address" required placeholder="주소 검색 버튼을 눌러주세요." />
+              <button class="secondary-button" id="postcodeButton" type="button">주소 검색</button>
+            </div>
+          </label>
+          <label class="field">
+            <span>상세주소</span>
+            <input name="detailAddress" placeholder="동/호수, 건물명 등 상세주소를 입력해주세요." />
+          </label>
+          <p class="error-text" data-error></p>
+          <div class="step-actions">
+            <button class="secondary-button" data-prev type="button">이전</button>
+            <button class="primary-button" data-next type="button">다음</button>
+          </div>
+        </section>
+
+        <section class="card" data-step="request">
+          <div class="page-title">
+            <p class="eyebrow">3페이지</p>
+            <h2>접수 정보</h2>
+          </div>
+          <fieldset>
+            <legend>6. 접수 유형</legend>
+            <div class="radio-list" data-radio="receptionType"></div>
+          </fieldset>
+          <fieldset>
+            <legend>7. 구매처</legend>
+            <div class="radio-list" data-radio="purchasePlace"></div>
+          </fieldset>
+          <label class="field">
+            <span>8. 구매일</span>
+            <input name="purchaseDate" required type="date" />
+          </label>
+          <p class="error-text" data-error></p>
+          <div class="step-actions">
+            <button class="secondary-button" data-prev type="button">이전</button>
+            <button class="primary-button" data-next type="button">다음</button>
+          </div>
+        </section>
+
+        <section class="card" data-step="category">
+          <div class="page-title">
+            <p class="eyebrow">4페이지</p>
+            <h2>카테고리 선택</h2>
+          </div>
+          <fieldset>
+            <legend>9. 카테고리</legend>
+            <div class="radio-list" data-radio="category"></div>
+          </fieldset>
+          <p class="error-text" data-error></p>
+          <div class="step-actions">
+            <button class="secondary-button" data-prev type="button">이전</button>
+            <button class="primary-button" data-next type="button">다음</button>
+          </div>
+        </section>
+
+        <section class="card" data-step="model">
+          <div class="page-title">
+            <p class="eyebrow">5페이지</p>
+            <h2>모델 선택</h2>
+            <p>선택한 카테고리에 맞는 제품명을 선택해주세요.</p>
+          </div>
+          <label class="field" data-model-field="텐트">
+            <span>10. 텐트 모델 선택</span>
+            <select name="tentModel" data-model="텐트"></select>
+          </label>
+          <label class="field" id="tentOtherWrap" hidden>
+            <span>텐트 모델 직접 입력</span>
+            <input name="tentOtherName" placeholder="제품명을 직접 입력해주세요." />
+          </label>
+          <label class="field" data-model-field="타프">
+            <span>11. 타프 모델 선택</span>
+            <select name="tarpModel" data-model="타프"></select>
+          </label>
+          <label class="field" data-model-field="사갓 캐노피">
+            <span>12. 캐노피 모델 선택</span>
+            <select name="canopyModel" data-model="사갓 캐노피"></select>
+          </label>
+          <label class="field" data-model-field="그 외 기어류">
+            <span>제품명</span>
+            <input name="gearProductName" placeholder="제품명을 입력해주세요." />
+          </label>
+          <p class="error-text" data-error></p>
+          <div class="step-actions">
+            <button class="secondary-button" data-prev type="button">이전</button>
+            <button class="primary-button" data-next type="button">다음</button>
+          </div>
+        </section>
+
+        <section class="card" data-step="canopy">
+          <div class="page-title">
+            <p class="eyebrow">6페이지</p>
+            <h2>사갓 캐노피 처리방식</h2>
+            <p>프레임 파손 또는 부품 문제에 해당하는 처리 방식을 선택해주세요.</p>
+          </div>
+          <div class="canopy-guide-image-wrap is-placeholder">
+            <img
+              src="./canopy-as-guide.png"
+              alt="사갓 캐노피 A/S 비용 안내"
+              class="canopy-guide-image"
+              onload="this.closest('.canopy-guide-image-wrap').classList.remove('is-placeholder')"
+              onerror="this.closest('.canopy-guide-image-wrap').classList.add('is-placeholder')"
+            />
+            <span class="canopy-guide-placeholder">사갓 캐노피 A/S 비용 안내 이미지 영역</span>
+          </div>
+          <fieldset>
+            <legend>13. 처리방식</legend>
+            <div class="radio-list" data-radio="canopyProcessType"></div>
+          </fieldset>
+          <p class="error-text" data-error></p>
+          <div class="step-actions">
+            <button class="secondary-button" data-prev type="button">이전</button>
+            <button class="primary-button" data-next type="button">다음</button>
+          </div>
+        </section>
+
+        <section class="card" data-step="purchaseLinks">
+          <div class="page-title">
+            <p class="eyebrow">6-1페이지</p>
+            <h2>선택하신 방법에 따라 아래 링크를 확인해주세요.</h2>
+          </div>
+          <div class="link-button-grid">
+            <a class="button-link" href="https://bp2.kr/yNjk" target="_blank" rel="noopener">자가수리 구매 및 교체 영상 보기</a>
+            <a class="button-link" href="https://bp2.kr/ylql" target="_blank" rel="noopener">리퍼 프레임 구매하기</a>
+            <a class="button-link" href="https://bp2.kr/ylql" target="_blank" rel="noopener">새 프레임 및 새 스킨 구매하기</a>
+          </div>
+          <div class="notice" style="margin-top: 18px">
+            <p>위 링크를 통해 구매 또는 신청을 완료하신 경우, 별도 AS 접수는 진행하지 않으셔도 됩니다.</p>
+          </div>
+          <div class="step-actions">
+            <button class="secondary-button" data-prev type="button">이전</button>
+            <button class="primary-button" id="finishWithoutSubmit" type="button">접수 종료</button>
+          </div>
+        </section>
+
+        <section class="card" data-step="detail">
+          <div class="page-title">
+            <p class="eyebrow">7페이지</p>
+            <h2>AS 상세 접수</h2>
+            <p>증상구분, 상세설명, 이미지 첨부, 최종 확인을 한 화면에서 작성해주세요.</p>
+          </div>
+          <fieldset>
+            <legend>증상구분을 선택해주세요.</legend>
+            <div class="radio-list" data-radio="symptomType"></div>
+          </fieldset>
+          <label class="field">
+            <span>상세설명</span>
+            <small>증상이 발생한 위치와 상태를 최대한 자세히 작성해주세요.</small>
+            <textarea name="detailDescription" required placeholder="예) 사갓 캐노피 4M 블랙 상단 프레임 1개가 휘어졌습니다."></textarea>
+          </label>
+          <div class="guide-box">
+            <strong>예시</strong>
+            <ul>
+              <li>텐트 출입문 오른쪽 지퍼가 중간 부분에서 벌어집니다.</li>
+              <li>플라이 후면 하단 스커트 부분이 약 10cm 정도 찢어졌습니다.</li>
+              <li>본체 좌측 메쉬창이 찢어졌습니다.</li>
+              <li>사갓 캐노피 4M 블랙 상단 프레임 1개가 휘어졌습니다.</li>
+              <li>에어폴에 바람을 넣으면 2~3시간 후 압력이 빠집니다.</li>
+              <li>동계형 우레탄창 중앙 벨크로가 떨어졌습니다.</li>
+            </ul>
+          </div>
+          <label class="field">
+            <span>이미지 첨부</span>
+            <small>
+              증상 확인을 위한 사진 첨부는 필수입니다. 전체 사진 1장 + 증상 부위 사진을 첨부해주세요.
+              최대 5장까지 등록 가능하며 jpg, jpeg, png 파일만 가능합니다.
+            </small>
+            <input accept=".jpg,.jpeg,.png,image/jpeg,image/png" multiple name="imageFilesInput" required type="file" />
+          </label>
+          <div class="photo-preview" id="photoPreview" aria-live="polite"></div>
+          <h3 class="question-title"><span>*</span> AS 접수 전 최종 확인</h3>
+          <div class="notice">
+            <p>- AS 접수 후 확인은 양식 제출 후 접수번호를 통해 확인 가능합니다.</p>
+            <p>- 평일 오후 5시 이전 접수 건은 당일 수거 접수하며, 영업일 1~3일 이내 택배사에서 회수 방문 예정입니다.</p>
+            <p>- 수리 기간은 제품 반입 후 10~14 영업일 정도 소요됩니다.</p>
+            <p>- 금요일 오후 5시 이후 접수 건은 월요일 또는 다음 영업일에 일괄 접수됩니다.</p>
+          </div>
+          <label class="check">
+            <input name="finalAgree" required type="checkbox" value="확인" />
+            <span>위 내용을 충분히 숙지하였습니다.</span>
+          </label>
+          <p class="error-text" data-error></p>
+          <div class="step-actions">
+            <button class="secondary-button" data-prev type="button">이전</button>
+            <button class="primary-button" id="submitButton" type="submit">제출하기</button>
+          </div>
+        </section>
+
+        <section class="card" data-step="complete">
+          <div class="page-title">
+            <p class="eyebrow">8페이지</p>
+            <h2 id="completeTitle">접수 완료</h2>
+            <p id="completeHelp">접수번호가 생성되었습니다.</p>
+          </div>
+          <div class="completion-card" id="completionReceipt">
+            <span>접수번호</span>
+            <strong id="completeReceiptNo"></strong>
+            <small id="completeRequestDate"></small>
+          </div>
+          <div class="step-actions">
+            <button class="secondary-button" id="restartButton" type="button">새 접수 작성</button>
+            <span></span>
+          </div>
+        </section>
+      </form>
+
+      <aside class="side">
+        <section class="panel">
+          <p class="eyebrow">접수 상태</p>
+          <h2 id="statusTitle">작성 대기 중</h2>
+          <p class="panel-help" id="statusHelp">제출 시 접수번호가 자동 생성되고, 연결 URL이 있으면 구글시트로 전송됩니다.</p>
+          <div class="receipt" id="sideReceipt" hidden>
+            <span>접수번호</span>
+            <strong id="sideReceiptNo"></strong>
+            <small id="sideRequestDate"></small>
+          </div>
+          <p class="warn" id="configWarning">현재는 구글시트 URL이 비어 있어 console.log로만 출력됩니다.</p>
+        </section>
+
+        <nav class="panel" aria-label="폼 목차">
+          <p class="eyebrow" style="font-size: 18px">진행 단계</p>
+          <div class="outline" id="outlineNav"></div>
+        </nav>
+      </aside>
+    </main>
+
+    <div class="postcode-modal" id="postcodeModal" aria-hidden="true">
+      <div class="postcode-panel">
+        <div class="postcode-header">
+          <strong>주소 검색</strong>
+          <button id="closePostcode" type="button" aria-label="주소 검색 닫기">×</button>
+        </div>
+        <div id="postcodeLayer"></div>
+      </div>
+    </div>
+
+    <script>
+      const GOOGLE_SCRIPT_URL = "";
+
+      const stepLabels = {
+        intro: "1페이지 접수 전 안내",
+        privacy: "2페이지 개인정보 입력",
+        request: "3페이지 접수 정보",
+        category: "4페이지 카테고리 선택",
+        model: "5페이지 모델 선택",
+        canopy: "6페이지 사갓 캐노피 처리방식",
+        purchaseLinks: "6-1페이지 구매 링크 안내",
+        detail: "7페이지 AS 상세 접수",
+        complete: "8페이지 접수 완료",
+      };
+
+      const baseFlow = ["intro", "privacy", "request", "category", "model"];
+      const detailFlow = ["detail", "complete"];
+
+      const options = {
+        receptionType: ["AS", "반품", "교환"],
+        purchasePlace: ["캠빌 스마트스토어", "고카프 및 전시회", "고릴라캠핑", "개인 오프라인", "기타"],
+        category: ["텐트", "타프", "사갓 캐노피", "그 외 기어류"],
+        canopyProcessType: ["자가수리", "리퍼 프레임 구매", "새 프레임 및 새 스킨 구매", "AS로 진행"],
+        symptomType: [
+          "주문실수 / 단순변심",
+          "오배송 / 배송누락",
+          "원단 / 메쉬",
+          "지퍼 / 봉제",
+          "폴대 / 에어폴",
+          "부자재 (버클, 아일렛, 가이라인, D링 등)",
+          "프레임 파손",
+          "기타",
+        ],
+      };
+
+      const models = {
+        "텐트": [
+          "박스 4p 에어 텐트",
+          "박스 4p 쉘터 에어텐트",
+          "고동 4p 에어 텐트",
+          "고동에어 2p 텐트",
+          "크랩 4p 에어 텐트",
+          "박스 2p 에어텐트",
+          "킹크랩 에어텐트",
+          "R2 에어텐트",
+          "1BAY 에어텐트",
+          "3BAY 에어텐트",
+          "터틀돔 에어텐트",
+          "고동 텐트 2p",
+          "고동코트 텐트",
+          "크랩 2p 텐트",
+          "크랩 4p 텐트",
+          "A텐트",
+          "호박 텐트",
+          "꼬막 M 텐트",
+          "소리코트 텐트",
+          "기타",
+        ],
+        "타프": [
+          "사갓에어 타프",
+          "클래식타프 5M (렉타)",
+          "클래식타프 4M (렉타)",
+          "클래식타프 5M (헥사)",
+          "클래식타프 4M (헥사)",
+          "클래식타프 TC (헥사)",
+          "클래식타프 5M 렉타 (메쉬스크린)",
+          "클래식타프 4M 렉타 (메쉬스크린)",
+          "클래식타프 5M 헥사 (메쉬스크린)",
+          "지피타프 헥사 (본품)",
+          "지피타프 렉타 (본품)",
+          "지피타프 헥사 (메쉬스크린)",
+          "지피타프 렉타 (메쉬스크린)",
+          "기타",
+        ],
+        "사갓 캐노피": [
+          "4M 블랙 캐노피 (본품)",
+          "3M 블랙 캐노피 (본품)",
+          "4M 카키 캐노피 (본품)",
+          "3M 카키 캐노피 (본품)",
+          "4M 탄 캐노피 (본품)",
+          "3M 탄 캐노피 (본품)",
+          "메쉬스크린",
+          "사이드월",
+          "동계형 우레탄창",
+        ],
+      };
+
+      let currentStep = "intro";
+      let selectedImages = [];
+
+      function populateRadioGroups() {
+        document.querySelectorAll("[data-radio]").forEach((container) => {
+          const name = container.dataset.radio;
+          container.innerHTML = "";
+          options[name].forEach((option) => {
+            const label = document.createElement("label");
+            label.innerHTML = `<input name="${name}" type="radio" value="${option}"><span>${option}</span>`;
+            container.append(label);
+          });
+        });
+      }
+
+      function populateModels() {
+        document.querySelectorAll("[data-model]").forEach((select) => {
+          const category = select.dataset.model;
+          select.innerHTML = '<option value="" selected disabled>선택해주세요.</option>';
+          models[category].forEach((option) => {
+            const item = document.createElement("option");
+            item.textContent = option;
+            select.append(item);
+          });
+        });
+      }
+
+      function selectedValue(name) {
+        const checked = document.querySelector(`[name="${name}"]:checked`);
+        return checked ? checked.value : "";
+      }
+
+      function visibleFlow() {
+        const category = selectedValue("category");
+        const canopyProcessType = selectedValue("canopyProcessType");
+        const flow = [...baseFlow];
+
+        if (category === "사갓 캐노피") {
+          flow.push("canopy");
+          if (canopyProcessType && canopyProcessType !== "AS로 진행") {
+            flow.push("purchaseLinks", "complete");
+            return flow;
+          }
+        }
+
+        flow.push(...detailFlow);
+        return flow;
+      }
+
+      function setStep(step) {
+        currentStep = step;
+        document.querySelectorAll("[data-step]").forEach((section) => {
+          section.classList.toggle("active", section.dataset.step === step);
+        });
+        renderOutline();
+        updateStatus();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function renderOutline() {
+        const nav = document.querySelector("#outlineNav");
+        nav.innerHTML = "";
+        visibleFlow().forEach((step) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.textContent = stepLabels[step];
+          button.className = step === currentStep ? "active" : "";
+          button.addEventListener("click", () => {
+            if (step === "complete") return;
+            setStep(step);
+          });
+          nav.append(button);
+        });
+      }
+
+      function updateStatus(text) {
+        const title = document.querySelector("#statusTitle");
+        const help = document.querySelector("#statusHelp");
+        title.textContent = text || stepLabels[currentStep] || "작성 중";
+        if (!text) {
+          help.textContent = "각 단계의 필수 항목을 작성하면 다음 단계로 이동할 수 있습니다.";
+        }
+      }
+
+      function setError(section, message) {
+        const error = section.querySelector("[data-error]");
+        if (error) {
+          error.textContent = message || "";
+          error.classList.toggle("show", Boolean(message));
+        }
+      }
+
+      function clearInvalid(section) {
+        section.querySelectorAll("[aria-invalid='true']").forEach((field) => {
+          field.removeAttribute("aria-invalid");
+        });
+      }
+
+      function validateStep(step) {
+        const section = document.querySelector(`[data-step="${step}"]`);
+        clearInvalid(section);
+        setError(section, "");
+
+        const requiredChecks = Array.from(section.querySelectorAll("input[required], select[required], textarea[required]"));
+        for (const field of requiredChecks) {
+          if ((field.type === "checkbox" || field.type === "radio") && field.name) {
+            const checked = section.querySelector(`[name="${field.name}"]:checked`);
+            if (!checked) {
+              setError(section, "필수 항목을 확인해주세요.");
+              field.setAttribute("aria-invalid", "true");
+              field.focus();
+              return false;
+            }
+            continue;
+          }
+
+          if (!String(field.value || "").trim()) {
+            setError(section, "필수 항목을 입력해주세요.");
+            field.setAttribute("aria-invalid", "true");
+            field.focus();
+            return false;
+          }
+        }
+
+        if (step === "request") {
+          if (!selectedValue("receptionType") || !selectedValue("purchasePlace")) {
+            setError(section, "접수 유형과 구매처를 선택해주세요.");
+            return false;
+          }
+        }
+
+        if (step === "category" && !selectedValue("category")) {
+          setError(section, "카테고리를 선택해주세요.");
+          return false;
+        }
+
+        if (step === "model") {
+          return validateModelStep(section);
+        }
+
+        if (step === "canopy" && !selectedValue("canopyProcessType")) {
+          setError(section, "사갓 캐노피 처리방식을 선택해주세요.");
+          return false;
+        }
+
+        if (step === "detail") {
+          if (!selectedValue("symptomType")) {
+            setError(section, "증상구분을 선택해주세요.");
+            return false;
+          }
+          if (selectedImages.length < 1) {
+            setError(section, "이미지를 1장 이상 첨부해주세요.");
+            return false;
+          }
+        }
+
+        return true;
+      }
+
+      function validateModelStep(section) {
+        const category = selectedValue("category");
+        const map = {
+          "텐트": "tentModel",
+          "타프": "tarpModel",
+          "사갓 캐노피": "canopyModel",
+          "그 외 기어류": "gearProductName",
+        };
+        const field = document.querySelector(`[name="${map[category]}"]`);
+        if (!field || !String(field.value || "").trim()) {
+          setError(section, "제품명을 선택하거나 입력해주세요.");
+          field?.setAttribute("aria-invalid", "true");
+          field?.focus();
+          return false;
+        }
+
+        if (category === "텐트" && field.value === "기타") {
+          const other = document.querySelector('[name="tentOtherName"]');
+          if (!String(other.value || "").trim()) {
+            setError(section, "제품명을 직접 입력해주세요.");
+            other.setAttribute("aria-invalid", "true");
+            other.focus();
+            return false;
+          }
+        }
+
+        return true;
+      }
+
+      function goNext() {
+        if (!validateStep(currentStep)) return;
+        const flow = visibleFlow();
+        const index = flow.indexOf(currentStep);
+        const next = flow[index + 1];
+        if (next) setStep(next);
+      }
+
+      function goPrev() {
+        const flow = visibleFlow();
+        const index = flow.indexOf(currentStep);
+        const prev = flow[index - 1];
+        if (prev) setStep(prev);
+      }
+
+      function syncModelFields() {
+        const category = selectedValue("category");
+        document.querySelectorAll("[data-model-field]").forEach((wrap) => {
+          const active = wrap.dataset.modelField === category;
+          wrap.hidden = !active;
+          wrap.querySelectorAll("input, select").forEach((field) => {
+            field.required = active;
+            if (!active) field.value = "";
+          });
+        });
+        syncTentOther();
+      }
+
+      function syncTentOther() {
+        const tentModel = document.querySelector('[name="tentModel"]');
+        const otherWrap = document.querySelector("#tentOtherWrap");
+        const otherInput = document.querySelector('[name="tentOtherName"]');
+        const shouldShow = selectedValue("category") === "텐트" && tentModel.value === "기타";
+        otherWrap.hidden = !shouldShow;
+        otherInput.required = shouldShow;
+        if (!shouldShow) otherInput.value = "";
+      }
+
+      function openPostcode() {
+        const addressInput = document.querySelector('[name="address"]');
+        const detailInput = document.querySelector('[name="detailAddress"]');
+        const modal = document.querySelector("#postcodeModal");
+        const layer = document.querySelector("#postcodeLayer");
+
+        if (!window.daum || !window.daum.Postcode) {
+          alert("주소 검색 서비스를 불러오지 못했습니다. 기본주소를 직접 입력해주세요.");
+          addressInput.focus();
+          return;
+        }
+
+        layer.innerHTML = "";
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+
+        new window.daum.Postcode({
+          width: "100%",
+          height: "100%",
+          oncomplete(data) {
+            addressInput.value = data.roadAddress || data.jibunAddress || "";
+            closePostcode();
+            detailInput.focus();
+          },
+        }).embed(layer);
+      }
+
+      function closePostcode() {
+        const modal = document.querySelector("#postcodeModal");
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+      }
+
+      function handlePhotoChange(event) {
+        const input = event.currentTarget;
+        const files = Array.from(input.files || []);
+        const preview = document.querySelector("#photoPreview");
+        const section = document.querySelector('[data-step="detail"]');
+        const allowed = ["image/jpeg", "image/png"];
+
+        selectedImages = [];
+        preview.innerHTML = "";
+
+        if (files.length > 5) {
+          input.value = "";
+          setError(section, "이미지는 최대 5장까지 등록 가능합니다.");
+          return;
+        }
+
+        for (const file of files) {
+          if (!allowed.includes(file.type)) {
+            input.value = "";
+            setError(section, "jpg, jpeg, png 파일만 첨부할 수 있습니다.");
+            return;
+          }
+        }
+
+        selectedImages = files;
+        setError(section, "");
+
+        files.forEach((file) => {
+          const figure = document.createElement("figure");
+          const img = document.createElement("img");
+          const caption = document.createElement("figcaption");
+          img.src = URL.createObjectURL(file);
+          img.alt = file.name;
+          caption.textContent = file.name;
+          figure.append(img, caption);
+          preview.append(figure);
+        });
+      }
+
+      function makeReceiptNo() {
+        const now = new Date();
+        const yy = String(now.getFullYear()).slice(2);
+        const mm = String(now.getMonth() + 1).padStart(2, "0");
+        const dd = String(now.getDate()).padStart(2, "0");
+        const key = `camvilReceiptSeq-${yy}${mm}${dd}`;
+        let seq = 1;
+
+        try {
+          seq = Number(localStorage.getItem(key) || "0") + 1;
+          localStorage.setItem(key, String(seq));
+        } catch {
+          seq = Math.floor(1 + Math.random() * 999);
+        }
+
+        return `AS${yy}${mm}${dd}-${String(seq).padStart(3, "0")}`;
+      }
+
+      function formatDateTime(date) {
+        const yyyy = date.getFullYear();
+        const mm = String(date.getMonth() + 1).padStart(2, "0");
+        const dd = String(date.getDate()).padStart(2, "0");
+        const hh = String(date.getHours()).padStart(2, "0");
+        const mi = String(date.getMinutes()).padStart(2, "0");
+        const ss = String(date.getSeconds()).padStart(2, "0");
+        return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
+      }
+
+      function readFile(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result || ""));
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function getProductName(formData) {
+        const category = formData.get("category");
+        if (category === "텐트") {
+          return formData.get("tentModel") === "기타"
+            ? String(formData.get("tentOtherName") || "").trim()
+            : formData.get("tentModel") || "";
+        }
+        if (category === "타프") return formData.get("tarpModel") || "";
+        if (category === "사갓 캐노피") return formData.get("canopyModel") || "";
+        return formData.get("gearProductName") || "";
+      }
+
+      async function buildSubmitData(form) {
+        const formData = new FormData(form);
+        const now = new Date();
+        const receiptNo = makeReceiptNo();
+        const imageFiles = await Promise.all(
+          selectedImages.map(async (file) => ({
+            name: file.name,
+            type: file.type,
+            size: file.size,
+            dataUrl: await readFile(file),
+          }))
+        );
+        const receptionType = String(formData.get("receptionType") || "");
+
+        return {
+          receiptNo,
+          requestDate: formatDateTime(now),
+          customerName: String(formData.get("customerName") || ""),
+          phone: String(formData.get("phone") || ""),
+          address: String(formData.get("address") || ""),
+          detailAddress: String(formData.get("detailAddress") || ""),
+          receptionType,
+          purchasePlace: String(formData.get("purchasePlace") || ""),
+          purchaseDate: String(formData.get("purchaseDate") || ""),
+          category: String(formData.get("category") || ""),
+          productName: String(getProductName(formData) || ""),
+          canopyProcessType: String(formData.get("canopyProcessType") || ""),
+          symptomType: String(formData.get("symptomType") || ""),
+          detailDescription: String(formData.get("detailDescription") || ""),
+          imageFiles,
+          classification: receptionType,
+          receptionChannel: "AS 웹접수",
+          status: "접수완료",
+          memo: "",
+          checkedDate: "",
+        };
+      }
+
+      async function submitForm(data) {
+        if (!GOOGLE_SCRIPT_URL) {
+          console.log("AS 웹접수 데이터", data);
+          return { ok: true, preview: true };
+        }
+
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(data),
+        });
+
+        return { ok: true };
+      }
+
+      function showCompletion(data, endedWithoutSubmit = false) {
+        const title = document.querySelector("#completeTitle");
+        const help = document.querySelector("#completeHelp");
+        const receipt = document.querySelector("#completionReceipt");
+
+        if (endedWithoutSubmit) {
+          title.textContent = "접수 종료";
+          help.textContent = "구매 링크를 통해 구매 또는 신청을 완료하신 경우 별도 AS 접수는 진행하지 않으셔도 됩니다.";
+          receipt.hidden = true;
+        } else {
+          title.textContent = "접수 완료";
+          help.textContent = "접수번호가 생성되었습니다.";
+          receipt.hidden = false;
+          document.querySelector("#completeReceiptNo").textContent = data.receiptNo;
+          document.querySelector("#completeRequestDate").textContent = data.requestDate;
+          document.querySelector("#sideReceipt").hidden = false;
+          document.querySelector("#sideReceiptNo").textContent = data.receiptNo;
+          document.querySelector("#sideRequestDate").textContent = data.requestDate;
+        }
+
+        setStep("complete");
+      }
+
+      async function handleSubmit(event) {
+        event.preventDefault();
+        if (!validateStep("detail")) return;
+
+        const button = document.querySelector("#submitButton");
+        button.disabled = true;
+        button.textContent = "제출 중";
+
+        try {
+          const data = await buildSubmitData(event.currentTarget);
+          await submitForm(data);
+          updateStatus(GOOGLE_SCRIPT_URL ? "구글시트 전송 완료" : "미리보기 저장 완료");
+          showCompletion(data);
+        } catch (error) {
+          const section = document.querySelector('[data-step="detail"]');
+          setError(section, "전송 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
+          console.error(error);
+        } finally {
+          button.disabled = false;
+          button.textContent = "제출하기";
+        }
+      }
+
+      function restartForm() {
+        document.querySelector("#serviceForm").reset();
+        selectedImages = [];
+        document.querySelector("#photoPreview").innerHTML = "";
+        document.querySelector("#sideReceipt").hidden = true;
+        syncModelFields();
+        setStep("intro");
+      }
+
+      function init() {
+        populateRadioGroups();
+        populateModels();
+        renderOutline();
+        syncModelFields();
+        document.querySelector("#configWarning").hidden = Boolean(GOOGLE_SCRIPT_URL);
+
+        document.querySelectorAll("[data-next]").forEach((button) => button.addEventListener("click", goNext));
+        document.querySelectorAll("[data-prev]").forEach((button) => button.addEventListener("click", goPrev));
+        document.querySelectorAll('[name="category"]').forEach((input) => {
+          input.addEventListener("change", () => {
+            syncModelFields();
+            renderOutline();
+          });
+        });
+        document.querySelector('[name="tentModel"]').addEventListener("change", syncTentOther);
+        document.querySelectorAll('[name="canopyProcessType"]').forEach((input) => {
+          input.addEventListener("change", renderOutline);
+        });
+        document.querySelector('[name="imageFilesInput"]').addEventListener("change", handlePhotoChange);
+        document.querySelector("#serviceForm").addEventListener("submit", handleSubmit);
+        document.querySelector("#postcodeButton").addEventListener("click", openPostcode);
+        document.querySelector("#closePostcode").addEventListener("click", closePostcode);
+        document.querySelector("#postcodeModal").addEventListener("click", (event) => {
+          if (event.target.id === "postcodeModal") closePostcode();
+        });
+        document.querySelector("#finishWithoutSubmit").addEventListener("click", () => {
+          updateStatus("구매 링크 안내 후 종료");
+          showCompletion({}, true);
+        });
+        document.querySelector("#restartButton").addEventListener("click", restartForm);
+      }
+
+      init();
+    </script>
+  </body>
+</html>
