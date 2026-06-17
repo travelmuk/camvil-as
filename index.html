@@ -363,6 +363,32 @@
         padding: 14px;
       }
 
+      .as-inspection-notice {
+        display: grid;
+        gap: 12px;
+        margin-top: 18px;
+        border: 1px solid #f3b8b2;
+        border-radius: 10px;
+        background: #fff4f2;
+        color: #7a1f16;
+        padding: 16px;
+      }
+
+      .as-inspection-notice strong {
+        color: #b3261e;
+        font-size: 17px;
+        font-weight: 900;
+      }
+
+      .as-inspection-notice p {
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .as-inspection-notice .primary-button {
+        width: fit-content;
+      }
+
       .canopy-guide-image-wrap {
         position: relative;
         width: 100%;
@@ -779,6 +805,10 @@
           width: 100%;
         }
 
+        .as-inspection-notice .primary-button {
+          width: 100%;
+        }
+
         .postcode-modal {
           align-items: flex-end;
           padding: 0;
@@ -1025,35 +1055,50 @@
         <section class="card" data-step="detail">
           <div class="page-title">
             <p class="eyebrow">7페이지</p>
-            <h2>AS 상세 접수</h2>
-            <p>증상구분, 상세설명, 이미지 첨부, 최종 확인을 한 화면에서 작성해주세요.</p>
+            <h2 id="detailTitle">AS 상세 접수</h2>
+            <p id="detailIntro">증상구분, 상세설명, 이미지 첨부, 최종 확인을 한 화면에서 작성해주세요.</p>
+          </div>
+          <div id="returnExchangeFields" hidden>
+            <fieldset>
+              <legend>반품/교환 사유를 선택해주세요.</legend>
+              <div class="radio-list" data-radio="returnExchangeReason"></div>
+            </fieldset>
+            <fieldset>
+              <legend>제품을 설치 또는 사용하셨나요?</legend>
+              <div class="radio-list" data-radio="productUseStatus"></div>
+            </fieldset>
+            <div class="as-inspection-notice" id="asInspectionNotice" hidden>
+              <strong>실외 설치/사용 후 발견된 문제는 반품·교환이 아닌 A/S 검수로 진행됩니다.</strong>
+              <p>실외 사용 이후에는 설치 환경, 지면 상태, 바람, 장력, 철수 과정 등에 따라 손상이 발생할 수 있어 초기불량 여부를 즉시 판단하기 어렵습니다.</p>
+              <p>제품 입고 후 검수 결과에 따라 무상 또는 유상 처리 여부를 안내드립니다.</p>
+              <button class="primary-button" id="asInspectionButton" type="button">A/S 검수로 접수하기</button>
+            </div>
           </div>
           <fieldset>
-            <legend>증상구분을 선택해주세요.</legend>
+            <legend id="symptomLegend">증상구분을 선택해주세요.</legend>
             <div class="radio-list" data-radio="symptomType"></div>
           </fieldset>
           <label class="field">
             <span>상세설명</span>
-            <small>증상이 발생한 위치와 상태를 최대한 자세히 작성해주세요.</small>
-            <textarea name="detailDescription" required placeholder="예) 사갓 캐노피 4M 블랙 상단 프레임 1개가 휘어졌습니다."></textarea>
+            <small>문제가 발생한 위치와 상태를 최대한 자세히 작성해주세요.</small>
+            <textarea name="detailDescription" required placeholder="예) 플라이 후면 하단 봉제선이 약 10cm 정도 터졌습니다."></textarea>
           </label>
           <div class="guide-box">
             <strong>예시</strong>
             <ul>
-              <li>텐트 출입문 오른쪽 지퍼가 중간 부분에서 벌어집니다.</li>
-              <li>플라이 후면 하단 스커트 부분이 약 10cm 정도 찢어졌습니다.</li>
-              <li>본체 좌측 메쉬창이 찢어졌습니다.</li>
-              <li>사갓 캐노피 4M 블랙 상단 프레임 1개가 휘어졌습니다.</li>
-              <li>에어폴에 바람을 넣으면 2~3시간 후 압력이 빠집니다.</li>
-              <li>동계형 우레탄창 중앙 벨크로가 떨어졌습니다.</li>
+              <li>플라이 후면 하단 봉제선이 약 10cm 정도 터졌습니다.</li>
+              <li>폴대 연결부가 휘어져 설치가 어렵습니다.</li>
+              <li>주문한 색상과 다른 제품이 도착했습니다.</li>
+              <li>구성품 중 사이드월 1장이 누락되었습니다.</li>
+              <li>실외 첫 피칭 중 에어가 빠지는 증상이 있었습니다.</li>
             </ul>
           </div>
           <label class="field">
             <span>이미지 첨부</span>
             <small>
-              📷 증상 사진을 첨부해주시면 보다 빠르고 정확한 AS 처리가 가능합니다.
-              사진이 없을 경우 정확한 진단을 위해 추가 사진 요청이 진행될 수 있습니다.
-              보다 정확한 진단을 위해 전체 사진 1장 + 증상 부위 사진을 첨부해주세요.
+              📷 증상 사진을 첨부해주시면 보다 빠르고 정확한 처리가 가능합니다.
+              사진이 없을 경우 정확한 확인을 위해 추가 사진 요청이 진행될 수 있습니다.
+              전체 사진 1장 + 증상 부위 사진을 첨부해주시면 더 빠른 확인이 가능합니다.
               최대 5장까지 등록 가능합니다. jpg, jpeg, png 파일만 가능합니다.
             </small>
             <input accept=".jpg,.jpeg,.png,image/jpeg,image/png" multiple name="imageFilesInput" type="file" />
@@ -1071,7 +1116,7 @@
               <img id="damageMapImage" alt="제품 도면" />
             </div>
           </section>
-          <h3 class="question-title"><span>*</span> AS 접수 전 최종 확인</h3>
+          <h3 class="question-title"><span>*</span> <span id="finalCheckText">AS 접수 전 최종 확인</span></h3>
           <div class="notice">
             <p>- AS 접수 후 확인은 양식 제출 후 접수번호를 통해 확인 가능합니다.</p>
             <p>- 평일 오후 5시 이전 접수 건은 당일 수거 접수하며, 영업일 1~3일 이내 택배사에서 회수 방문 예정입니다.</p>
@@ -1153,7 +1198,7 @@
         model: "5페이지 모델 선택",
         canopy: "6페이지 사갓 캐노피 처리방식",
         purchaseLinks: "6-1페이지 구매 링크 안내",
-        detail: "7페이지 AS 상세 접수",
+        detail: "7페이지 상세 접수",
         complete: "8페이지 접수 완료",
       };
 
@@ -1161,18 +1206,43 @@
       const detailFlow = ["detail", "complete"];
 
       const options = {
-        receptionType: ["AS", "반품", "교환"],
+        receptionType: ["AS 접수", "반품/교환 접수"],
         purchasePlace: ["캠빌 스마트스토어", "고카프 및 전시회", "고릴라캠핑", "개인 오프라인", "기타"],
         category: ["텐트", "타프", "사갓 캐노피", "그 외 기어류"],
         canopyProcessType: ["자가수리", "리퍼 프레임 구매", "새 프레임 및 새 스킨 구매", "AS로 진행"],
-        symptomType: [
-          "주문실수 / 단순변심",
-          "오배송 / 배송누락",
+        symptomType: [],
+        asSymptomType: [
           "원단 / 메쉬",
           "지퍼 / 봉제",
           "폴대 / 에어폴",
           "부자재 (버클, 아일렛, 가이라인, D링 등)",
           "프레임 파손",
+          "기타",
+        ],
+        returnExchangeReason: [
+          "초기불량 의심",
+          "오배송",
+          "배송누락",
+          "배송 중 파손",
+          "주문실수 / 옵션 선택 실수",
+          "단순변심",
+          "상품정보와 다름",
+          "기타",
+        ],
+        productUseStatus: [
+          "미개봉",
+          "박스만 개봉",
+          "실내에서 확인만 함",
+          "실외에서 설치/피칭함",
+          "실외에서 실제 사용함",
+        ],
+        returnExchangeSymptomType: [
+          "원단 / 메쉬",
+          "지퍼 / 봉제",
+          "폴대 / 에어폴",
+          "부자재 (버클, 아일렛, 가이라인, D링 등)",
+          "프레임 파손",
+          "구성품 누락 / 오배송",
           "기타",
         ],
       };
@@ -1234,16 +1304,35 @@
       let activeDamageMapSrc = "";
       let activeDamageProductName = "";
       let damageMarkers = [];
+      let forcedReceptionType = "";
+
+      const outdoorUseStatuses = ["실외에서 설치/피칭함", "실외에서 실제 사용함"];
+
+      function renderRadioOptions(name, values) {
+        const container = document.querySelector(`[data-radio="${name}"]`);
+        if (!container) return;
+
+        const currentValue = selectedValue(name);
+        container.innerHTML = "";
+        values.forEach((option) => {
+          const label = document.createElement("label");
+          const input = document.createElement("input");
+          const span = document.createElement("span");
+
+          input.name = name;
+          input.type = "radio";
+          input.value = option;
+          input.checked = currentValue === option;
+          span.textContent = option;
+          label.append(input, span);
+          container.append(label);
+        });
+      }
 
       function populateRadioGroups() {
         document.querySelectorAll("[data-radio]").forEach((container) => {
           const name = container.dataset.radio;
-          container.innerHTML = "";
-          options[name].forEach((option) => {
-            const label = document.createElement("label");
-            label.innerHTML = `<input name="${name}" type="radio" value="${option}"><span>${option}</span>`;
-            container.append(label);
-          });
+          renderRadioOptions(name, options[name] || []);
         });
       }
 
@@ -1262,6 +1351,97 @@
       function selectedValue(name) {
         const checked = document.querySelector(`[name="${name}"]:checked`);
         return checked ? checked.value : "";
+      }
+
+      function getEffectiveReceptionType() {
+        return forcedReceptionType || selectedValue("receptionType");
+      }
+
+      function isReturnExchangeDetailMode() {
+        return selectedValue("receptionType") === "반품/교환 접수" && !forcedReceptionType;
+      }
+
+      function isOutdoorUseStatus(value) {
+        return outdoorUseStatuses.includes(value);
+      }
+
+      function clearRadioGroup(name) {
+        document.querySelectorAll(`[name="${name}"]`).forEach((input) => {
+          input.checked = false;
+          input.removeAttribute("aria-invalid");
+        });
+      }
+
+      function renderSymptomOptions() {
+        const isReturnExchange = isReturnExchangeDetailMode();
+        const values = isReturnExchange ? options.returnExchangeSymptomType : options.asSymptomType;
+        const legend = document.querySelector("#symptomLegend");
+
+        if (legend) {
+          legend.textContent = isReturnExchange
+            ? "문제가 발생한 부위를 선택해주세요."
+            : "증상구분을 선택해주세요.";
+        }
+
+        renderRadioOptions("symptomType", values);
+      }
+
+      function syncOutdoorReviewNotice() {
+        const notice = document.querySelector("#asInspectionNotice");
+        if (!notice) return;
+
+        const shouldShow = isReturnExchangeDetailMode() && isOutdoorUseStatus(selectedValue("productUseStatus"));
+        notice.hidden = !shouldShow;
+      }
+
+      function syncReceptionFields() {
+        const isReturnExchange = isReturnExchangeDetailMode();
+        const returnExchangeFields = document.querySelector("#returnExchangeFields");
+        const detailTitle = document.querySelector("#detailTitle");
+        const detailIntro = document.querySelector("#detailIntro");
+        const finalCheckText = document.querySelector("#finalCheckText");
+
+        if (returnExchangeFields) {
+          returnExchangeFields.hidden = !isReturnExchange;
+        }
+
+        if (detailTitle) {
+          detailTitle.textContent = isReturnExchange ? "반품/교환 상세 접수" : "AS 상세 접수";
+        }
+
+        if (detailIntro) {
+          detailIntro.textContent = isReturnExchange
+            ? "반품/교환 사유, 제품 상태, 문제 부위, 상세설명, 이미지 첨부를 작성해주세요."
+            : "증상구분, 상세설명, 이미지 첨부, 최종 확인을 한 화면에서 작성해주세요.";
+        }
+
+        if (finalCheckText) {
+          finalCheckText.textContent = isReturnExchange ? "접수 전 최종 확인" : "AS 접수 전 최종 확인";
+        }
+
+        renderSymptomOptions();
+        syncOutdoorReviewNotice();
+      }
+
+      function handleReceptionTypeChange() {
+        forcedReceptionType = "";
+        clearRadioGroup("symptomType");
+
+        if (selectedValue("receptionType") !== "반품/교환 접수") {
+          clearRadioGroup("returnExchangeReason");
+          clearRadioGroup("productUseStatus");
+        }
+
+        syncReceptionFields();
+        renderOutline();
+      }
+
+      function switchToAsInspection() {
+        forcedReceptionType = "A/S 검수";
+        clearRadioGroup("symptomType");
+        syncReceptionFields();
+        setStep("detail");
+        updateStatus("A/S 검수로 접수 전환");
       }
 
       function visibleFlow() {
@@ -1288,6 +1468,7 @@
         });
         renderOutline();
         if (step === "detail") {
+          syncReceptionFields();
           syncDamageMap();
         }
         updateStatus();
@@ -1381,8 +1562,27 @@
         }
 
         if (step === "detail") {
+          if (isReturnExchangeDetailMode()) {
+            if (!selectedValue("returnExchangeReason")) {
+              setError(section, "반품/교환 사유를 선택해주세요.");
+              return false;
+            }
+
+            const productUseStatus = selectedValue("productUseStatus");
+            if (!productUseStatus) {
+              setError(section, "제품 사용 상태를 선택해주세요.");
+              return false;
+            }
+
+            if (isOutdoorUseStatus(productUseStatus)) {
+              setError(section, "실외 설치/사용 제품은 A/S 검수로 접수해주세요.");
+              document.querySelector("#asInspectionButton")?.focus();
+              return false;
+            }
+          }
+
           if (!selectedValue("symptomType")) {
-            setError(section, "증상구분을 선택해주세요.");
+            setError(section, isReturnExchangeDetailMode() ? "문제가 발생한 부위를 선택해주세요." : "증상구분을 선택해주세요.");
             return false;
           }
         }
@@ -1730,7 +1930,7 @@
         const imageFiles = await Promise.all(
           selectedImages.map((file) => readFile(file))
         );
-        const receptionType = String(formData.get("receptionType") || "");
+        const receptionType = String(getEffectiveReceptionType() || formData.get("receptionType") || "");
 
         return {
           receiptNo,
@@ -1740,6 +1940,8 @@
           address: String(formData.get("address") || ""),
           detailAddress: String(formData.get("detailAddress") || ""),
           receptionType,
+          returnExchangeReason: String(formData.get("returnExchangeReason") || ""),
+          productUseStatus: String(formData.get("productUseStatus") || ""),
           purchasePlace: String(formData.get("purchasePlace") || ""),
           purchaseDate: String(formData.get("purchaseDate") || ""),
           category: String(formData.get("category") || ""),
@@ -1768,6 +1970,8 @@
         data.productName = data.productName || "";
         data.customerName = data.customerName || "";
         data.phone = data.phone || "";
+        data.returnExchangeReason = data.returnExchangeReason || "";
+        data.productUseStatus = data.productUseStatus || "";
 
         const rawDataSnapshot = { ...data };
         delete rawDataSnapshot.rawData;
@@ -1801,7 +2005,7 @@
           method: "POST",
           mode: "no-cors",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: serializedData,
+          body: JSON.stringify(data),
         }).catch((error) => {
           console.error("구글시트 전송 요청을 시작하지 못했습니다.", error);
         });
@@ -1860,22 +2064,31 @@
       function restartForm() {
         document.querySelector("#serviceForm").reset();
         selectedImages = [];
+        forcedReceptionType = "";
         resetDamageMap();
         document.querySelector("#photoPreview").innerHTML = "";
         document.querySelector("#sideReceipt").hidden = true;
         syncModelFields();
+        syncReceptionFields();
         setStep("intro");
       }
 
       function init() {
         populateRadioGroups();
         populateModels();
+        syncReceptionFields();
         renderOutline();
         syncModelFields();
         document.querySelector("#configWarning").hidden = Boolean(GOOGLE_SCRIPT_URL);
 
         document.querySelectorAll("[data-next]").forEach((button) => button.addEventListener("click", goNext));
         document.querySelectorAll("[data-prev]").forEach((button) => button.addEventListener("click", goPrev));
+        document.querySelectorAll('[name="receptionType"]').forEach((input) => {
+          input.addEventListener("change", handleReceptionTypeChange);
+        });
+        document.querySelectorAll('[name="productUseStatus"]').forEach((input) => {
+          input.addEventListener("change", syncOutdoorReviewNotice);
+        });
         document.querySelectorAll('[name="category"]').forEach((input) => {
           input.addEventListener("change", () => {
             syncModelFields();
@@ -1898,6 +2111,7 @@
           updateStatus("구매 링크 안내 후 종료");
           showCompletion({}, true);
         });
+        document.querySelector("#asInspectionButton").addEventListener("click", switchToAsInspection);
         document.querySelector("#restartButton").addEventListener("click", restartForm);
       }
 
